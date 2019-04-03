@@ -1,0 +1,244 @@
+body:before, body:after {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 10px;
+}
+body:before {
+    top: 0;
+    background-color: #696969;
+}
+body:after {
+    bottom: 0;
+    background-color: #696969;
+}
+
+body {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    background-color: #111111;
+    font-family: Verdana, sans-serif;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+iframe.shader {
+    border-style: none;
+    width:32%;
+    float:left;
+    margin-right:1%;
+    margin-bottom:1%;
+    height:200px;
+}
+
+div#banner{
+    width:25%;
+    float:left;
+    text-align:center;
+    padding-top:2%;
+    color: #FF0000;
+    background: url(graphics/banner.gif) repeat-y;
+    background-size: 100%;
+
+}
+
+div#header, div#footer {
+    width: 100%;
+    border-width: 3px;
+    border-bottom-style: solid;
+    border-right-style: solid;
+    border-color: #333333;
+    margin-bottom: 0px;
+    background: url('graphics/panorama.jpg') no-repeat;
+    background-color: #000000;
+    color: #123123;
+    text-align:right;
+}
+
+div#header {
+    height: 120px;
+    background-size: 105% 300%;
+    line-height:1px;
+    margin-left:8px;
+    padding-right:2px;
+}
+
+div.wrap {
+    background-color: #23180d;
+    width:100%;
+    height:100%;
+    border: 10px inset #555555;
+    margin-left: -10px;
+}
+
+div#display {
+    background: url('graphics/brushed_metal.jpg') repeat-y;
+}
+
+p#glcanvas_status {
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 12px;
+    font-weight:bold;
+}
+
+div#stadium_params {
+    font-family: Helvetica, sans-serif;
+    font-variant: small-caps;
+    text-align: left;
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+input.stadium_input {
+    float:right;
+    width:60%;
+    font-family: Impact, fantasy;
+    font-variant: small-caps;
+}
+
+div.square {
+    width:3px;
+    height:4px;
+    border-left-width:1px;
+    border-left-style:solid;
+    border-bottom-width:1px;
+    border-bottom-style:solid;
+    float:left;
+}
+
+thead {
+    color: green;
+    cursor: default;
+    -moz-user-select: all;
+    -webkit-user-select: all;
+    -khtml-user-select: all;
+}
+tbody { color: blue;
+    -moz-user-select: all;
+    -webkit-user-select: all;
+    -khtml-user-select: all;
+    background-color:#234567;
+}
+
+tbody:hover {
+    text-decoration: underline;
+    color: red;
+    background-color:#123456;
+}
+
+input.beginner:hover {text-decoration: underline; }
+
+a:link {text-decoration: none;
+}
+a:visited {color: #880000; }
+a:active {color: red; }
+a:hover {text-decoration: underline; color: red; }
+
+canvas#glcanvas {
+/*    position: absolute; */
+    background:url(graphics/earth.jpg);
+    background-size:100% 100%;
+    display: none;
+}
+
+canvas#textureCanvas { float:left;display:none; }
+
+div.main {
+    float:right;
+    width:75%;
+    text-align: justify;
+    background-color: #112233;
+    font-size: 23px;
+    text-align: center;
+    color: #5588dd;
+}
+
+table#button_table {
+    background-color: #88aabb;
+    border: 10px inset #666666;
+}
+
+div.title {
+    position: relative;
+    width:90%;
+    margin: 17px 17px;
+}
+
+input.floating, input.floating2 {
+    width:100%;
+    background-color: transparent;
+    border: none;
+    vertical-align: middle;
+    font-size: inherit;
+    text-align: inherit;
+}
+
+input.floating { color: inherit; }
+input.floating2 { color:#abcdef; }
+
+input.floating:hover, input.floating2:hover {
+    cursor: default;
+    color:#33aabb;
+}
+
+/*
+div.main:before, div.main:after {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 10px;
+}
+div.main:before {
+    top: 0;
+    background-color: #696969;
+}
+div.main:after {
+    bottom: 0;
+    background-color: #696969;
+}
+*/
+
+div#footer {
+    clear:both;
+    background-size: 105% 800%;
+    height: 21px;
+    margin-left:-8px;
+    padding-right:18px;
+}
+
+
+div.one_third{
+    height:85%;
+    width:33%;
+    float:left;
+    text-align:center;
+    line-height:200%;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+}
+
+textarea {
+    background-color:#222222;
+    color:#dddddd;
+}
+
+textarea.shader {
+    width:100%;
+    overflow:hidden;
+}
+
+textarea.shader:hover {
+    height:500px;
+}
+
+textarea.keyboard {
+    position:absolute; bottom: 8px; left:0px;
+    width:100%;
+    margin: 0px -4px;
+    background-color:#aaaaaa;
+    border-style:none;
+}

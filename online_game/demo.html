@@ -1,0 +1,230 @@
+<!DOCTYPE html> <!-- HTML 5 -->
+<!-- All text on this page is property of Michael Sartin-Tarm. (c) 2013. -->
+<!-- License pending.. -->
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>WebGL Demo</title>
+    <link rel="stylesheet" type="text/css" href="styles.css"/>
+    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+
+    <!-- Facebook API - See
+         developers.facebook.com/docs/reference/plugins/like/
+         Disconnected for  now (takes too many liberties with its permissions)
+    <script async="async" id="facebook-jssdk" src="\
+//connect.facebook.net/en_IN/all.js#xfbml=1&appId=497409006971163"></script>
+    -->
+
+    <!-- External JS libraries -->
+    <script async="async" src="libs/gl-matrix.js"></script>
+
+    <!-- Global constants and functions -->
+    <script async="async" src="functions.js"></script>
+    <script async="async" src="constants.js"></script>
+
+    <!-- GL classes -->
+    <script async="async" src="GLobject.js"></script>
+    <script async="async" src="GLmatrix.js"></script>
+    <script async="async" src="GLtexture.js"></script>
+    <script async="async" src="GLframe.js"></script>
+    <script async="async" src="GLshader.js"></script>
+    <script async="async" src="GLcanvas.js"></script>
+    <script async="async" src="GLstring.js"></script>
+    <script async="async" src="GLaudio.js"></script>
+
+    <!-- Simple objects -->
+    <script async="async" src="Cylinder.js"></script>
+    <script async="async" src="Sphere.js"></script>
+    <script async="async" src="Torus.js"></script>
+    <script async="async" src="Disk.js"></script>
+    <script async="async" src="Quad.js"></script>
+
+    <!-- Complex objects lv.1 -->
+    <script async="async" src="Stool.js"></script>
+    <script async="async" src="SixSidedPrism.js"></script>
+    <script async="async" src="ThickCyl.js"></script>
+    <script async="async" src="Player.js"></script>
+
+    <!-- Complex objects lv.2 -->
+    <script async="async" src="StoolPyramid.js"></script>
+    <script async="async" src="MazePiece.js"></script>
+    <script async="async" src="Jumbotron.js"></script>
+
+    <!-- Environments -->
+    <script async="async" src="Skybox.js"></script>
+    <script async="async" src="Cagebox.js"></script>
+    <script async="async" src="Game.js"></script>
+    <script async="async" src="GameLevel.js"></script>
+
+    <!-- The purpose of this inline script is to monitor
+         whether the WebGL JS has been loaded. -->
+    <script type="application/javascript">
+    var the_scene = ""; // global object that is monitored
+    // cool font animation
+    (function() {
+      var i_count = 0;
+      var inputz;
+      var new_color = parseInt("890abc", 16);
+      var limit = parseInt("ffffff", 16);
+      var weak_color = parseInt("666666", 16);
+
+      var cool_color = 238 * 256 * 256 + 135 * 256 + 187;
+
+      var started = false;
+
+      var params = window.location.search;
+      if(params.length > 1) the_scene = params.substring(1);
+
+
+      var check_start = function() {
+        if (started === true) return true;
+        if (the_scene.length > 0) {
+          theCanvas.start(the_scene);
+          started = true;
+        }
+        return started;
+      };
+
+      window.initGLcanvas = function() {
+        if (!GLcanvas || !Game) {
+          window.setTimeout(window.initGLcanvas, 50);
+        } else if (!theCanvas){
+          theCanvas = new GLcanvas();
+          window.setTimeout(window.initGLcanvas, 50);
+          inputz = document.getElementsByClassName("beginner");
+        } else if (!check_start()) {
+            window.setTimeout(check_start,  50);
+            window.setTimeout(check_start, 100);
+            window.setTimeout(window.initGLcanvas, 150);
+
+            var izz = inputz[(++i_count) % inputz.length];
+            var new_thing = new_color.toString(16);
+            // append leading 0's if needed
+            for(var i=new_thing.length; i<6; ++i) new_thing = "0" + new_thing;
+            izz.style.color = "#" + new_thing;
+
+            // that should keep things interesting
+            new_color = (1487 * (new_color % 557)) * 23 + Math.abs(new_color - cool_color) % limit;
+            // color too bright, invert it
+            if ((new_color % 256) + (new_color / 256 % 256) + (new_color / (256 * 256) % 256) > 240)
+              new_color -= weak_color;
+          }
+
+      };
+    } ());
+    </script>
+  </head>
+
+  <body onload="window.initGLcanvas();">
+    <div id='header'>
+      <div class='one_third'>Michael</div>
+      <div class='one_third'>Vello</div>
+      <div class='one_third'>Sartin-Tarm</div>
+    </div>
+
+    <div class="wrap">
+      <div id="banner">
+	  <input id="stadium_balls" type="button" style="font-size:20px;" onclick="the_scene='game';" value="Play" class="floating stadium_input" />
+	<p id="glcanvas_status">
+          <br/>
+        </p>
+
+        <textarea id="error-log" rows="10" cols="10" style="position:relative;width:95%;font-size:10px;display:none;overflow:hidden;"></textarea>
+
+	<canvas id="textureCanvas"></canvas>
+
+      </div>
+
+      <div class="main">
+	<!--
+	     We use a table with 2x2 cells,
+	     lumping all the links into their own cells..
+	  -->
+        <div id="web_gl" style="display:inline-block;">WebGL</div>
+        <div style="display:inline-block;"> And </div>
+        <div id="web_audio" style="display:inline-block;">Web Audio</div>
+        <div style="display:inline-block;">: A Demo </div>
+	<table id="button_table" style="width:100%;">
+	  <thead><tr>
+	      <th><u>Shapes</u></th>
+	      <th><u>Environments</u></th>
+	  </tr></thead>
+	  <tbody><tr>
+	      <td>
+		<input type="button"
+		       onclick="the_scene='cylinder';"
+		       value="Cylinder"
+		       class="floating beginner"/>
+		<input type="button"
+		       onclick="the_scene='skybox';"
+		       value="Skybox"
+		       class="floating beginner"/>
+		<input type="button"
+		       onclick="the_scene='sphere';"
+		       value="Sphere"
+		       class="floating beginner"/>
+		<input type="button"
+		       onclick="the_scene='stool';"
+		       value="Stool"
+		       class="floating beginner"/>
+		<input type="button"
+		       onclick="the_scene='text';"
+		       value="Text"
+		       class="floating beginner"/>
+		<input type="button"
+		       onclick="the_scene='torus';"
+		       value="Torus"
+		       class="floating beginner"/>
+	      </td>
+	      <td>
+		<input type="button"
+		       onclick="the_scene='shadow';"
+		       value="Shadows"
+		       class="floating beginner"/>
+		<input type="button"
+		       onclick="the_scene='jumbotron';"
+		       value="Jumbotron"
+		       class="floating beginner"/>
+		<input type="button"
+		       value="Maze (disabled)"
+		       class="floating beginner" style="color:#aa4455;font-size:22px;" disabled="disabled"/>
+		<input type="button"
+		       value="Stadium (disabled)"
+		       class="floating beginner" style="color:#aa4455;font-size:22px;" disabled="disabled"/>
+		<input type="button"
+		       onclick="the_scene='game';"
+		       value="Game"
+		       class="floating beginner"/>
+	      </td>
+	  </tr></tbody>
+	</table>
+	<canvas id="glcanvas"></canvas>
+      </div>
+      <div id="land_down_under" style="clear:both;">
+        <!-- It's bad code to not specify cols, but
+             width in CSS lets browsers size it properly -->
+        <textarea class="keyboard" rows="1"></textarea>
+      </div>
+    </div>
+
+
+    <div id="footer">
+      <input type="button"
+	     value="(c) 2013 Batman and Robin"
+	     class="floating" />
+      <div class="title" id="title4" > </div>
+    </div>
+    <!-- Put this element one tag scope higher to hide it. -->
+
+    <input class="floating2" id="shader_viewer" style="text-align:center;" type="button" value="View Shaders"/>
+    <div class="shaders" id="shader1" style="display:none;">
+      <iframe frameborder=0 class="shader" id="shader_default" src="shader_default.html"></iframe>
+      <iframe frameborder=0 class="shader" id="shader_canvas" src="shader_canvas.html"></iframe>
+      <iframe frameborder=0 class="shader" id="shader_player" src="shader_player.html"></iframe>
+      <iframe frameborder=0 class="shader" id="shader_color" src="shader_color.html"></iframe>
+      <iframe frameborder=0 class="shader" id="shader_frame" src="shader_frame.html"></iframe>
+    </div>
+    <div id="fb-root"></div>
+<!--    <div class="fb-like" data-href="http://msartintarm.github.io/online_game/demo.html" data-width="450" data-show-faces="true" data-send="false" colorscheme="dark"></div>-->
+  </body>
+</html>

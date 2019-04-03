@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'
+	  'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<!-- All text on this page is property of Aberger / Sartin-Tarm. (c) 2013. -->
+<html xmlns='http://www.w3.org/1999/xhtml'>
+  <head> 
+    <title>WebGL Victory</title> 
+    <script type="text/javascript">
+      function addInfo() {
+        var page_url = window.location.toString();
+        var end_time = page_url.substring(page_url.indexOf("=")+1);
+        document.getElementById("info").innerHTML = 
+        end_time + " seconds. " + document.getElementById("info").innerHTML;
+      }
+    </script>
+  </head>
+  
+  <body style="color:#fedcba; background-color:#000000; text-align:center;" onload="addInfo();">
+    <p id="the_victory"></p>
+    <p><b style="color:#ff8888;">Victory!</b></p> 
+    <p id="info">Wow. We did not think you could do it, but you proved us wrong.</p>
+    <p>Tell
+      <a style="color:#abcdef;" href=craberger@gmail.com>Aberger</a> and
+      <a style="color:#abcdef;" href=msartintarm@gmail.com>Sartin-Tarm</a>
+      about your success.</p>
+  </body>
+</html>
