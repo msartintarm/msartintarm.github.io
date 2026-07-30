@@ -39,10 +39,24 @@ export const GAMES: Game[] = [
     tag: "TypeScript · WASM",
   },
   {
+    title: "The Game",
+    href: "/TheGame/",
+    blurb: "A WebGL maze romp — wander a textured 3D world built from hand-rolled geometry primitives.",
+    status: "live",
+    tag: "WebGL · JS",
+  },
+  {
+    title: "Online Game",
+    href: "/online_game/",
+    blurb: "An earlier WebGL maze game, complete with in-browser audio and a victory screen.",
+    status: "live",
+    tag: "WebGL · JS · Audio",
+  },
+  {
     title: "WebGL Demo (legacy)",
     href: "/webgl-demo/",
     blurb: "The original hand-rolled WebGL playground that used to live at the site root — shapes, environments, and shading knobs. Relocated here.",
-    status: "soon",
+    status: "live",
     tag: "WebGL · JS",
   },
 ];

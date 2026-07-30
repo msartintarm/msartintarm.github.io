@@ -4,7 +4,7 @@ import { GAMES } from "./games.ts";
 
 test("every game has an absolute, cross-app href", () => {
   for (const g of GAMES) {
-    assert.match(g.href, /^\/[a-z0-9-]+\/$/i, `${g.title} href is an absolute trailing-slash path`);
+    assert.match(g.href, /^\/[a-z0-9_-]+\/$/i, `${g.title} href is an absolute trailing-slash path`);
     assert.ok(g.title && g.blurb && g.tag, `${g.title} has title/blurb/tag`);
     assert.ok(g.status === "live" || g.status === "soon", `${g.title} has a valid status`);
   }
