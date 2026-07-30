@@ -39,6 +39,13 @@ export const GAMES: Game[] = [
     tag: "TypeScript · WASM",
   },
   {
+    title: "New Game",
+    href: "/new-game/",
+    blurb: "A React + browserify canvas game — collision, players, and an expandable options panel, bundled from ES6 source.",
+    status: "live",
+    tag: "React · Canvas · JS",
+  },
+  {
     title: "The Game",
     href: "/TheGame/",
     blurb: "A WebGL maze romp — wander a textured 3D world built from hand-rolled geometry primitives.",
