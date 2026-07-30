@@ -1,0 +1,52 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.canvas {
+  width: 100%;
+  height: 42vh;
+  min-height: 260px;
+  display: block;
+  border: 1px solid #1c2230;
+  border-radius: 10px;
+  background: #0b0e13;
+  touch-action: none;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.button {
+  font: inherit;
+  font-size: 13px;
+  color: #e6edf3;
+  background: #161c28;
+  border: 1px solid #263048;
+  border-radius: 6px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.field {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.status {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-left: auto;
+}

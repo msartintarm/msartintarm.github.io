@@ -1,0 +1,82 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+      # Nightly + rust-src for the atomics/`build-std` threaded wasm build below.
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: rust-src
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            engine/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('engine/Cargo.lock') }}
+
+      - name: Install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+        working-directory: web
+
+      # Threaded wasm build (nightly + build-std) into public/wasm-pkg-threads/, so the
+      # deployed site can serve the CPU-threads module to cross-origin-isolated browsers.
+      # Additive: the single-threaded package is still built by `npm run build`'s
+      # prebuild below, and browsers without isolation fall back to it.
+      - name: Build the threaded wasm package
+        run: npm run wasm:build:threads
+        working-directory: web
+        # Required: a threaded-build failure fails the whole deploy, so a broken build
+        # never ships a degraded, silently single-threaded site — the last good deploy
+        # stays live until it's fixed. (The frontend still falls back at *runtime* for
+        # browsers that can't cross-origin isolate; that's a capability limit, not a
+        # broken build.)
+
+      # `npm run build` runs `prebuild` to rebuild the (single-threaded) wasm package,
+      # then the Next export copies public/ (both wasm packages) to the site. The hub
+      # is the site root, so NO NEXT_PUBLIC_BASE_PATH is set (basePath stays "").
+      - name: Build static export
+        run: npm run build
+        working-directory: web
+
+      - name: Disable Jekyll processing
+        run: touch web/out/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment

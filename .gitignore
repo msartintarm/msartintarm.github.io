@@ -1,0 +1,9 @@
+engine/target/
+web/node_modules/
+web/.next/
+web/out/
+web/public/wasm-pkg/
+web/public/wasm-pkg-threads/
+web/*.tsbuildinfo
+__pycache__/
+*.pyc

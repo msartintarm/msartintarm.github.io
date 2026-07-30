@@ -1,0 +1,43 @@
+[package]
+name = "engine"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+# Fail the build (native, wasm, and `cargo test`) on unused code/imports. Exempts
+# the public API, so it won't flag pub items used only by the wasm bridge.
+[lints.rust]
+unused = "deny"
+dead_code = "deny"
+
+[features]
+# CPU data-parallelism for the per-particle force pass (rayon). The pass is an
+# order-preserving pure map over read-only state, so it's a drop-in speed-up
+# validated bit-for-bit against the serial result (see the `serial_matches_parallel`
+# test). Enable with `--features parallel`. In the browser it is pulled in by
+# `wasm-threads` (below), which also supplies the worker pool.
+parallel = ["dep:rayon"]
+# Browser CPU-thread pool via `wasm-bindgen-rayon`. Enable ONLY for the dedicated
+# nightly, atomics-enabled wasm build (`web`'s `wasm:build:threads`) — it needs
+# `-Z build-std` + `target-feature=+atomics`. Never in the default build; the plain
+# `wasm:build` stays single-threaded and stable-toolchain.
+wasm-threads = ["parallel", "dep:wasm-bindgen-rayon"]
+
+[dependencies]
+# Plain-data numeric crunching only in the sim core. The DOM bridge is target-gated
+# so the sim/ layer runs and is tested under plain `cargo test`, natively and fast.
+rayon = { version = "1", optional = true }
+
+# Browser entry point: target-gated so `cargo test` never links any of it while the
+# wasm build exposes `Simulation`.
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "0.2"
+# The browser rayon worker pool (the `wasm-threads` feature). Optional so the default
+# single-threaded wasm build never links it.
+wasm-bindgen-rayon = { version = "1", optional = true }
+
+[profile.release]
+opt-level = 3
+lto = true
