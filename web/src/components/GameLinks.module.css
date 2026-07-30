@@ -1,31 +1,18 @@
 .panel {
   position: relative;
-  border: 1px solid rgba(120, 140, 175, 0.14);
+  border: 1px solid rgba(60, 190, 120, 0.28);
   border-radius: 10px;
-  background: transparent; /* let the particle backdrop show between the cards */
+  /* Funky green tint over a blur — kept translucent so the particles stay
+     visible through it, just softened and pushed green. */
+  background: rgba(8, 40, 22, 0.036);
+  backdrop-filter: blur(3px) saturate(1.6) hue-rotate(-8deg) contrast(1.05);
+  -webkit-backdrop-filter: blur(3px) saturate(1.6) hue-rotate(-8deg) contrast(1.05);
+  box-shadow: inset 0 0 40px rgba(0, 50, 24, 0.21);
 }
 
-/* The "appearance of a scroll": a capped-height, overflow-auto region with fade
-   edges top and bottom and a slim styled scrollbar, so it reads as a scroll panel. */
+/* The full list, shown without scrolling — it grows to fit every card. */
 .scroll {
-  max-height: 320px;
-  overflow-y: auto;
   padding: 10px;
-  /* Fade the content into the top/bottom edges. */
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
-  scrollbar-width: thin;
-  scrollbar-color: #2b3446 transparent;
-}
-.scroll::-webkit-scrollbar {
-  width: 8px;
-}
-.scroll::-webkit-scrollbar-thumb {
-  background: #2b3446;
-  border-radius: 4px;
-}
-.scroll::-webkit-scrollbar-track {
-  background: transparent;
 }
 
 .list {
@@ -47,17 +34,20 @@
   padding: 12px 14px;
   border: 1px solid rgba(140, 160, 200, 0.18);
   border-radius: 8px;
-  /* Frosted glass: translucent fill + blur, so the particles read softly through. */
-  background: rgba(18, 24, 38, 0.42);
-  backdrop-filter: blur(20px) saturate(1.15);
-  -webkit-backdrop-filter: blur(20px) saturate(1.15);
+  /* Frosted green glass over the panel — translucent so the simulation still
+     reads through each card, blurred and tinted rather than hidden. */
+  background: rgba(10, 46, 26, 0.048);
+  backdrop-filter: blur(3px) saturate(1.48) hue-rotate(-6deg);
+  -webkit-backdrop-filter: blur(3px) saturate(1.48) hue-rotate(-6deg);
   color: inherit;
   text-decoration: none;
+  /* Dark-green glow behind the item text (inherited by title/tag/blurb). */
+  text-shadow: 0 0 6px rgba(18, 120, 62, 0.95), 0 0 14px rgba(10, 78, 42, 0.9);
   transition: border-color 0.15s, background 0.15s, transform 0.15s;
 }
 .card:hover {
-  border-color: rgba(120, 150, 220, 0.5);
-  background: rgba(26, 34, 52, 0.55);
+  border-color: rgba(70, 220, 140, 0.6);
+  background: rgba(14, 44, 26, 0.62);
   transform: translateY(-1px);
 }
 .card:focus-visible {
@@ -103,6 +93,6 @@
 }
 .disabled:hover {
   transform: none;
-  background: rgba(18, 24, 38, 0.42);
-  border-color: rgba(140, 160, 200, 0.18);
+  background: rgba(8, 30, 18, 0.5);
+  border-color: rgba(60, 190, 120, 0.28);
 }

@@ -40,6 +40,7 @@ export default function ParticlesCanvas() {
   const [error, setError] = useState<string | null>(null);
   const [compute, setCompute] = useState("serial");
   const [count, setCount] = useState(1500);
+  const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     let raf = 0;
@@ -164,6 +165,7 @@ export default function ParticlesCanvas() {
     <div className={styles.wrapper}>
       <canvas ref={canvasRef} className={styles.canvas} />
 
+      {showSettings && (
       <div className={styles.controls}>
         <button className={styles.button} onClick={toggle} disabled={!ready}>
           {playing ? "Pause" : "Play"}
@@ -203,6 +205,17 @@ export default function ParticlesCanvas() {
           {ready && <span ref={statsRef} />}
         </span>
       </div>
+      )}
+
+      <button
+        className={styles.fab}
+        onClick={() => setShowSettings((v) => !v)}
+        aria-expanded={showSettings}
+        aria-label={showSettings ? "Hide particle settings" : "Show particle settings"}
+        title={showSettings ? "Hide particle settings" : "Particle settings"}
+      >
+        {showSettings ? "✕" : "⚙"}
+      </button>
     </div>
   );
 }

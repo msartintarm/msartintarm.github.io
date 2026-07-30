@@ -1,0 +1,27 @@
+/* Responsive up-scaling for large / high-resolution displays.
+ *
+ * On a 4K panel at 100% browser scale the viewport is ~3840 CSS px, so the fixed-px
+ * UI renders at roughly half its intended size. `zoom` scales the whole layout the
+ * same way a browser-zoom does — text, spacing, controls, and the fixed particle
+ * backdrop all grow together — but the canvas keeps painting at full device pixels,
+ * so the result is a 1080p-scale experience rendered sharper, not merely enlarged.
+ *
+ * Stepped by width so a 1440p screen gets a gentle bump and a 4K screen lands near
+ * 2×. Only scales up (min-width) — nothing shrinks below the base design size. */
+@media (min-width: 2200px) {
+  :root {
+    zoom: 1.3;
+  }
+}
+
+@media (min-width: 2800px) {
+  :root {
+    zoom: 1.6;
+  }
+}
+
+@media (min-width: 3400px) {
+  :root {
+    zoom: 2;
+  }
+}
